@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+	<th:block th:if="${report != null}">
+		<h2>日報　詳細ページ</h2>
+		<table>
+			<tbody>
+				<tr>
+					<th>氏名</th>
+					<td th:text="${report.employee.name}"></td>
+				</tr>
+				<tr>
+					<th>日付</th>
+					<td th:text="${#dates.format(report.reportDate, 'yyyy-MM-dd')}"></td>
+				</tr>
+				<tr>
+					<th>内容</th>
+					<td><pre th:text="${report.content}"></pre></td>
+				</tr>
+				<tr>
+					<th>登録日時</th>
+					<td th:text="${#dates.format(report.created_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+				<tr>
+					<th>更新日時</th>
+					<td th:text="${#dates.format(report.updated_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<th:block th:if="${session.login_employee.id == report.employee.id}">
+			<p><a th:href="@{/reports/edit(id=${report.id})}">この日報を編集する</a></p>
+		</th:block>
+	</th:block>
+	<th:block th:if="${report == null}">
+		<h2>お探しのデータは見つかりませんでした。</h2>
+	</th:block>
+    <p><a th:href="@{/reports/index}">一覧に戻る</a></p>
+</body>
+</html>

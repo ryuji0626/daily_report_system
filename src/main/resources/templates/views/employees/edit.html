@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+	<th:block th:if="${employee != null}">
+		<h2>id :[[ ${employee.id}]] の従業員情報 編集ページ</h2>
+		<p>（パスワードは変更する場合のみ入力してください）</p>
+		<form method="POST" th:action="@{/employees/update}">
+			<div th:replace="~{views/employees/_form::registForm(${employee})}"></div>
+		</form>
+		<p>
+			<a href="#" onclick="confirmDestroy();">この従業員情報を削除する</a>
+		</p>
+		<form method="POST" th:action="@{/employees/destroy}">
+			<input type="hidden" name="token" th:value="${employee.token}" />
+		</form>
+		<script>
+			function confirmDestroy() {
+				if (confirm("本当に削除してよろしいですか？")) {
+					document.forms[1].submit();
+				}
+			}
+		</script>
+	</th:block>
+	<th:block th:if="${employee == null}">
+		<h2>お探しのデータは見つかりませんでした。</h2>
+	</th:block>
+	<p>
+		<a th:href="@{/employees/index}">一覧に戻る</a>
+	</p>
+</body>
+</html>

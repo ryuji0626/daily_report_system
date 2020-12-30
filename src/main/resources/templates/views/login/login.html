@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+	<div th:if="${hasError}" id="flush_error">社員番号かパスワードが間違っています。</div>
+	<div th:if="${flush != null}" id="flush_success" th:text="${flush}"></div>
+	<h2>ログイン</h2>
+	<form method="POST" th:action="@{/login}" th:object="${login}">
+        <label for="code">社員番号</label>
+        <br />
+        <input type="text" name="code" th:value="*{code}" />
+        <br />
+		<br />
+		<label for="password">パスワード</label>
+		<br />
+		<input type="password" name="password" />
+		<br />
+		<br />
+		<input type="hidden" name="_token" value="*{_token}" />
+		<button type="submit">ログイン</button>
+	</form>
+</body>
+</html>

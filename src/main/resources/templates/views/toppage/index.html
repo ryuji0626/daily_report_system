@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+	<div th:if="${flush != null}" id="flush_success" th:text="${flush}"></div>
+	<h2>日報管理システムへようこそ</h2>
+	<h3>【自分の日報 一覧】</h3>
+	<table id="report_list">
+		<tbody>
+			<tr>
+				<th class="report_name">氏名</th>
+				<th class="report_date">日付</th>
+				<th class="report_title">タイトル</th>
+				<th class="report_action">操作</th>
+			</tr>
+			<tr class="row${status.count % 2}" th:each="report, status : ${reports}" th:object="${report}">
+				<td class="report_name" th:text="*{employee.name}"></td>
+				<td class="report_date" th:text="*{#dates.format(reportDate, 'yyyy-MM-dd')}"></td>
+				<td class="report_title" th:text="*{title}"></td>
+				<td class="report_action"><a th:href="@{/reports/show(id=*{id})}">詳細を見る</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="pagination">
+		（全 [[${reports_count}]] 件）
+		<br />
+
+		<th:block th:each="i : ${#numbers.sequence(1, ((reports_count - 1) / 15) + 1, 1)}">
+			<span th:if="${i == page}" th:text="${i}"></span>
+			<a th:if="${i != page}" th:href="@{/(page=${i})}" th:text="${i}"></a>
+			&nbsp;
+		</th:block>
+	</div>
+	<p>
+	<a th:href="@{/reports/new}">新規日報の登録</a>
+	</p>
+</body>
+</html>

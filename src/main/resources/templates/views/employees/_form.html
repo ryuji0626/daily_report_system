@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="registForm(employee)">
+	    <div th:if="${errors != null}" id="flush_error">
+	    	入力内容にエラーがあります。<br />
+        	<p th:each="error : ${errors}">・[[${error}]]</p>
+    	</div>
+
+		<label for="code">社員番号</label><br />
+		<input type="text" name="code" th:value="${employee.code}" />
+		<br /><br />
+
+		<label for="name">氏名</label><br />
+		<input type="text" name="name" th:value="${employee.name}" />
+		<br /><br />
+
+		<label for="password">パスワード</label><br />
+		<input type="password" name="password" />
+		<br /><br />
+
+		<label for="admin_flag">権限</label><br />
+		<select name="adminFlag">
+    		<option value="0" th:selected="${employee.adminFlag == 0}">一般</option>
+    		<option value="1" th:selected="${employee.adminFlag == 1}">管理者</option>
+		</select>
+		<br /><br />
+
+		<input type="hidden" name="token" th:value="${employee.token}" />
+		<button type="submit">投稿</button>
+	</div>
+</body>
+</html>

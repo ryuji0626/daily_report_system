@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+	<th:block th:if="${employee != null}">
+		<h2>id : [[${employee.id}]] の従業員情報 詳細ページ</h2>
+		<table>
+			<tbody>
+				<tr>
+					<th>社員番号</th>
+					<td th:text="${employee.code}"></td>
+				</tr>
+				<tr>
+					<th>氏名</th>
+					<td th:text="${employee.name}"></td>
+				</tr>
+				<tr>
+					<th>権限</th>
+					<td th:text="${employee.adminFlag == 1} ? '管理者' : '一般'"></td>
+				</tr>
+				<tr>
+					<th>登録日時</th>
+					<td th:text="${#dates.format(employee.created_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+				<tr>
+					<th>更新日時</th>
+					<td th:text="${#dates.format(employee.updated_at, 'yyyy-MM-dd HH:mm:ss')}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<p><a th:href="@{/employees/edit(id=${employee.id})}">この従業員情報を編集する</a></p>
+
+	</th:block>
+	<th:block th:if="${employee == null}">
+		<h2>お探しのデータは見つかりませんでした。</h2>
+	</th:block>
+    <p><a th:href="@{/employees/index}">一覧に戻る</a></p>
+</body>
+</html>

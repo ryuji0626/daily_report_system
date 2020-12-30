@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+    <h2>従業員　新規登録ページ</h2>
+
+    <form method="POST" th:action="@{/employees/create}">
+        <div th:replace="~{views/employees/_form::registForm(${employee})}"></div>
+    </form>
+
+    <p><a th:href="@{/employees/index}">一覧に戻る</a></p>
+
+</body>
+</html>

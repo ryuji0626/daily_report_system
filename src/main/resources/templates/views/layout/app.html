@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (body)">
+<head>
+<meta charset="utf-8">
+<link th:href="@{/css/reset.css}" rel="stylesheet">
+<link th:href="@{/css/style.css}" rel="stylesheet">
+<title>日報管理システム</title>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+                <div id="header_menu">
+                    <h1><a th:href="@{/}">日報管理システム</a></h1>&nbsp;&nbsp;&nbsp;
+                    <th:block th:if="${session.login_employee != null}">
+                    	<th:block th:if="${session.login_employee.adminFlag == 1}">
+                    		<a th:href="@{/employees/index}" th:text="'従業員管理'"></a>&nbsp;
+                    	</th:block>
+                    	<a th:href="@{/reports/index}" th:text="'日報管理'"></a>&nbsp;
+                    </th:block>
+                </div>
+                <th:block th:if="${session.login_employee != null}">
+                    <div id="employee_name">
+                        [[${session.login_employee.name}]]&nbsp;さん&nbsp;&nbsp;&nbsp;
+                        <a th:href="@{/logout}">ログアウト</a>
+                    </div>
+                </th:block>
+		</div>
+		<div id="content">
+			<div th:replace="${body}"></div>
+		</div>
+		<div id="footer">by Taro Kirameki.</div>
+	</div>
+</body>
+</html>

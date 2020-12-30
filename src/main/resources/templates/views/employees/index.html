@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+	<div th:if="${flush != null}" id="flush_success" th:text="${flush}"></div>
+	<h2>従業員 一覧</h2>
+	<table id="employee_list">
+		<tbody>
+			<tr>
+				<th>社員番号</th>
+				<th>氏名</th>
+				<th>操作</th>
+			</tr>
+
+			<tr class="row${status.count % 2}" th:each="employee, status : ${employees}" th:object="${employee}">
+				<td th:text="*{code}"></td>
+				<td th:text="*{name}"></td>
+				<td th:switch="*{deleteFlag}">
+					<span th:case="1" th:text="'（削除済み）'"></span>
+					<a th:case="0" th:href="@{/employees/show(id=*{id})}">詳細を表示</a>
+					<span th:case="*"></span>
+				</td>
+			</tr>
+
+		</tbody>
+	</table>
+
+	<div id="pagination">
+		（全 [[${employees_count}]] 件）
+		<br />
+
+		<th:block th:each="i : ${#numbers.sequence(1, ((employees_count - 1) / 15) + 1, 1)}">
+			<span th:if="${i == page}" th:text="${i}"></span>
+			<a th:if="${i != page}" th:href="@{/employees/index(page=${i})}" th:text="${i}"></a>
+			&nbsp;
+		</th:block>
+	</div>
+	<p>
+		<a th:href="@{/employees/new}">新規従業員の登録</a>
+	</p>
+</body>
+</html>

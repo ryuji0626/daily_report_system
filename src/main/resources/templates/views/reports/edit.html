@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{views/layout/app :: layout(~{::body/content()})}">
+<head>
+</head>
+<body>
+	<th:block th:if="${report != null}">
+		<h2>日報　編集ページ</h2>
+		<form method="POST" th:action="@{/reports/update}">
+			<div th:replace="~{views/reports/_form::registForm(${report})}"></div>
+		</form>
+	</th:block>
+	<th:block th:if="${report == null}">
+		<h2>お探しのデータは見つかりませんでした。</h2>
+	</th:block>
+	<p>
+		<a th:href="@{/reports/index}">一覧に戻る</a>
+	</p>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<div th:fragment="registForm(report)">
+		<div th:if="${errors != null}" id="flush_error">
+			入力内容にエラーがあります。<br />
+			<p th:each="error : ${errors}">・[[${error}]]</p>
+		</div>
+
+		<label for="report_date">日付</label><br />
+		<input type="date" name="reportDate" th:value="${#dates.format(report.reportDate, 'yyyy-MM-dd')}" />
+		<br />
+		<br />
+
+		<label for="name">氏名</label><br />
+		[[${session.login_employee.name}]]
+		<br />
+		<br />
+		<label for="title">タイトル</label><br />
+		<input type="text" name="title" th:value="${report.title}" />
+		<br />
+		<br />
+		<label for="content">内容</label><br />
+		<textarea name="content" rows="10" cols="50">[[${report.content}]]</textarea>
+		<br />
+		<br />
+		<input type="hidden" name="token" th:value="${report.token}" />
+		<button type="submit">投稿</button>
+	</div>
+</body>
+</html>
